@@ -8,9 +8,9 @@ namespace Application.Persistence.Contracts
 {
     public interface IGenericRepository<T> where T : class
     {
-        T Create(T entity);
-        T Update(T entity);
-        bool Delete(T entity);
+        Task<T> Create(T entity);
+        Task<T> Update(T entity);
+        Task<bool> Delete(T entity);
         Task<List<T>> GetListAsync();
         Task<T> GetByIdAsync(int Id);
 
