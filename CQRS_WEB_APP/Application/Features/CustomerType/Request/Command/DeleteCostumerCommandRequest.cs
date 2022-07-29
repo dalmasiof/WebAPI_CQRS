@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace Application.Features.CustomerType.Request.Command
 {
-    public class CreateCostumerCommand : IRequest<int>
+    public class DeleteCostumerCommandRequest : IRequest<bool>
     {
-        public CostumerDTO costumer { get; set; }
+        public int Id { get; set; }
+
     }
 }

@@ -19,20 +19,26 @@ namespace Persistence.Repositories
             return entity;
         }
 
-        public async Task<bool> Delete(T entity)
+        public async Task<bool> Delete(int Id)
         {
-            _ctx.Set<T>().Remove(entity);
-         
-            if (await _ctx.SaveChangesAsync() > 0)
-                return true;
+            var entityToRemove = await _ctx.Set<T>().FindAsync(Id);
+            if (entityToRemove != null)
+            {
+                _ctx.Remove(entityToRemove);
+            }
             else
+            {
                 return false;
+            }
+
+            return (await _ctx.SaveChangesAsync() > 0);
+             
         }
 
         public async Task<T> GetByIdAsync(int Id)
         {
             return await _ctx.Set<T>().FindAsync(Id);
-            
+
         }
 
         public async Task<List<T>> GetListAsync()

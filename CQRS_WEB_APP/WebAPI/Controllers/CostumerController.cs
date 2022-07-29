@@ -29,29 +29,36 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
-            var costumers = await _mediator.Send(new CostumerDetailsRequest().Id = id);
+            var costumers = await _mediator.Send(new CostumerDetailsRequest() { Id = id });
             return Ok(costumers);
         }
 
         // POST api/<CostumerController>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] CostumerDTO costumerDTO )
+        public async Task<ActionResult> Post([FromBody] CostumerDTO costumerDTO)
         {
-            var command = new CreateCostumerCommand() { costumer = costumerDTO };
+            var command = new CreateCostumerCommandRequest() { costumer = costumerDTO };
             var costumers = await _mediator.Send(command);
             return Ok(costumers);
         }
 
         // PUT api/<CostumerController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public async Task<ActionResult> Put([FromBody] CostumerDTO costumerDTO)
         {
+            var command = new UpdateCostumerCommandRequest() { costumer = costumerDTO };
+            var costumers = await _mediator.Send(command);
+            return Ok(costumers);
         }
 
         // DELETE api/<CostumerController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{Id}")]
+        public async Task<ActionResult> Delete(int Id)
         {
+                var excludeCOnfirmation = await _mediator.Send(new DeleteCostumerCommandRequest() { Id = Id });
+                return Ok(excludeCOnfirmation);
+
+
         }
     }
 }

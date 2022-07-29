@@ -11,25 +11,20 @@ using System.Threading.Tasks;
 
 namespace Application.Features.CustomerType.Handlers.Command
 {
-    public class Create_CostumerRequestHandler : IRequestHandler<CreateCostumerCommandRequest, int>
+    public class DeleteCostumerCommandHandler : IRequestHandler<DeleteCostumerCommandRequest, bool>
     {
         private readonly ICostumerRepository _costumerRepository;
         private readonly IMapper _map;
 
-        public Create_CostumerRequestHandler(ICostumerRepository costumerRepository,IMapper map)
+        public DeleteCostumerCommandHandler(ICostumerRepository costumerRepository, IMapper map)
         {
             _costumerRepository = costumerRepository;
             _map = map;
         }
 
-        public async Task<int> Handle(CreateCostumerCommandRequest request, CancellationToken cancellationToken)
+        public Task<bool> Handle(DeleteCostumerCommandRequest request, CancellationToken cancellationToken)
         {
-            var costumerToCreate = _map.Map<Costumer>(request.costumer);
-             
-            var costumerCreated = await _costumerRepository.Create(costumerToCreate);
-
-            return costumerCreated.Id;
-
+            return _costumerRepository.Delete(request.Id);            
         }
     }
 }
