@@ -11,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Application.Features.CustomerType.Handlers.Command
 {
-    public class Create_CostumerRequestHandler : IRequestHandler<CreateCostumerCommandRequest, int>
+    public class CreateCostumerRequestHandler : IRequestHandler<CreateCostumerCommandRequest, int>
     {
         private readonly ICostumerRepository _costumerRepository;
         private readonly IMapper _map;
 
-        public Create_CostumerRequestHandler(ICostumerRepository costumerRepository,IMapper map)
+        public CreateCostumerRequestHandler(ICostumerRepository costumerRepository,IMapper map)
         {
             _costumerRepository = costumerRepository;
             _map = map;

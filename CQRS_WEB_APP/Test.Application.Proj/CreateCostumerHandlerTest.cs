@@ -1,4 +1,7 @@
-﻿using Application.Features.CustomerType.Handlers.Query;
+﻿using Application.DTOs;
+using Application.Features.CustomerType.Handlers.Command;
+using Application.Features.CustomerType.Handlers.Query;
+using Application.Features.CustomerType.Request.Command;
 using Application.Features.CustomerType.Request.Queries;
 using Application.Persistence.Contracts;
 using Application.Profiles;
@@ -34,11 +37,29 @@ namespace Test.Application.Proj
         [Fact]
         public async void GetCostumerList()
         {
-            var handler = new CostumerListRequestHandler(_repoMock.Object,_maper);
+            var handler = new CostumerListRequestHandler(_repoMock.Object, _maper);
 
-            var result = await handler.Handle(new CostumerListRequest(),CancellationToken.None);
+            var result = await handler.Handle(new CostumerListRequest(), CancellationToken.None);
 
             result.Count.ShouldBeGreaterThan(0);
+        }
+
+        [Fact]
+        public async void Costumer_Create_returnNewCostumer()
+        {
+            var handler = new CreateCostumerRequestHandler(_repoMock.Object, _maper);
+
+            var result = await handler.Handle(new CreateCostumerCommandRequest(){
+                costumer = new CostumerDTO()
+                {
+                    BirthDate = DateTime.Parse("1975-12-04"),
+                    Email = "pai@gmail.com",
+                    Name="Dalmasio Pai"
+                }
+            }, CancellationToken.None);
+
+            
+            result.ShouldBeOfType<int>();
         }
 
     }

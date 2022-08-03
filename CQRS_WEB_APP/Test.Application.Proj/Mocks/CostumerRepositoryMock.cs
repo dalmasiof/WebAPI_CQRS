@@ -31,6 +31,14 @@ namespace Test.Application.Proj.Mocks
                 },
             };
 
+            Costumer costumerCreated = new Costumer()
+            {
+                BirthDate = DateTime.Parse("1975-12-04"),
+                Email = "pai@gmail.com",
+                Name = "Dalmasio Pai",
+                Id = 3
+            };
+
             var mockRepo = new Mock<ICostumerRepository>();
             mockRepo.Setup(
                 repo => repo.GetListAsync()
@@ -38,7 +46,7 @@ namespace Test.Application.Proj.Mocks
 
             mockRepo.Setup(
                 repo => repo.Create(It.IsAny<Costumer>())
-            ).ReturnsAsync(It.IsAny<Costumer>());
+            ).ReturnsAsync(costumerCreated);
 
             return mockRepo;
 
